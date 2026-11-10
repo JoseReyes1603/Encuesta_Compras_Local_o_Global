@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Compras local o global?</title>
+<style>
+  :root { --verde:#2e7d32; --verde-claro:#e8f5e9; --tierra:#795548; --fondo:#f4f9f4; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:var(--fondo); color:#1b2e1b; }
+  header { background:linear-gradient(135deg,#2e7d32,#558b2f); color:#fff; padding:28px 16px; text-align:center; }
+  header h1 { margin:0 0 8px; font-size:1.8rem; }
+  header p { margin:0 auto; max-width:600px; opacity:.95; }
+  main { max-width:680px; margin:0 auto; padding:16px; }
+  .pregunta { background:#fff; border-radius:12px; padding:16px; margin-bottom:14px; box-shadow:0 1px 4px rgba(0,0,0,.08); border-left:5px solid var(--verde); }
+  .pregunta h3 { margin:0 0 10px; font-size:1.05rem; }
+  label { display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:8px; cursor:pointer; }
+  label:hover { background:var(--verde-claro); }
+  input[type=radio] { accent-color:var(--verde); width:18px; height:18px; }
+  .botones { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0; }
+  button { flex:1 1 200px; padding:14px; font-size:1rem; font-weight:600; border:none; border-radius:10px; cursor:pointer; color:#fff; }
+  #btnEnviar { background:var(--verde); }
+  #btnReporte { background:var(--tierra); }
+  button:disabled { opacity:.55; cursor:not-allowed; }
+  #resultado { display:none; background:#fff; border:2px solid var(--verde); border-radius:12px; padding:16px; white-space:pre-line; line-height:1.5; }
+  footer { text-align:center; font-size:.85rem; color:#5a6b5a; padding:20px 16px 30px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🌱 ¿Compras local o global?</h1>
+  <p>Encuesta anónima sobre hábitos de compra para la materia de Desarrollo Sustentable. No se registran nombres. ¡Gracias por participar!</p>
+</header>
+
+<main>
+  <form id="encuesta"></form>
+
+  <div class="botones">
+    <button type="button" id="btnEnviar">Enviar respuesta</button>
+    <button type="button" id="btnReporte">Generar reporte</button>
+  </div>
+
+  <div id="resultado"></div>
+</main>
+
+<footer>Desarrollo Sustentable · TecNM · Mazatlán, Sinaloa</footer>
+
+<script>
+  // >>> PEGA AQUÍ LA URL DE TU WEBHOOK DE MAKE (entre las comillas) <<<
+  const WEBHOOK_URL = "https://hook.us2.make.com/t2nukjc6gatu1ai6u4k3pe8yexibxpbt";
+
+  const PREGUNTAS = [
+    { campo:"comida",   texto:"¿Dónde compras la mayor parte de tu comida?", opciones:["Mercado o tianguis","Tienda de barrio","Supermercado","En línea"] },
+    { campo:"ropa",     texto:"¿Dónde compras tu ropa?", opciones:["Negocio local","Tienda departamental","App internacional","Segunda mano"] },
+    { campo:"apps",     texto:"¿Con qué frecuencia compras en apps internacionales?", opciones:["Nunca","Una vez al mes","Varias veces al mes","Cada semana"] },
+    { campo:"criterio", texto:"¿Qué pesa más al comprar?", opciones:["Precio","Calidad","Cercanía","Apoyar lo local","Marca"] },
+    { campo:"origen",   texto:"¿Sabes de dónde viene lo que compras?", opciones:["Sí","A veces","No"] },
+    { campo:"edad",     texto:"Rango de edad", opciones:["Menos de 18","18 a 29","30 a 49","50 o más"] }
+  ];
+
+  const form = document.getElementById("encuesta");
+  const resultado = document.getElementById("resultado");
+  const btnEnviar = document.getElementById("btnEnviar");
+  const btnReporte = document.getElementById("btnReporte");
+
+  PREGUNTAS.forEach((p, i) => {
+    const div = document.createElement("div");
+    div.className = "pregunta";
+    div.innerHTML = `<h3>${i + 1}. ${p.texto}</h3>` +
+      p.opciones.map(o => `<label><input type="radio" name="${p.campo}" value="${o}"> ${o}</label>`).join("");
+    form.appendChild(div);
+  });
+
+  function mostrar(texto) {
+    resultado.style.display = "block";
+    resultado.textContent = texto;
+  }
+
+  function bloquear(estado) {
+    btnEnviar.disabled = estado;
+    btnReporte.disabled = estado;
+  }
+
+  async function enviar(params) {
+    bloquear(true);
+    mostrar("Procesando...");
+    try {
+      const resp = await fetch(WEBHOOK_URL, { method:"POST", body:params });
+      if (!resp.ok) throw new Error("HTTP " + resp.status);
+      mostrar(await resp.text());
+      return true;
+    } catch (e) {
+      mostrar("No se pudo conectar, intenta de nuevo.");
+      return false;
+    } finally {
+      bloquear(false);
+    }
+  }
+
+  btnEnviar.addEventListener("click", async () => {
+    const params = new URLSearchParams();
+    params.append("accion", "respuesta");
+    for (const p of PREGUNTAS) {
+      const marcada = form.querySelector(`input[name="${p.campo}"]:checked`);
+      if (!marcada) { mostrar("Por favor contesta todas las preguntas (falta: " + p.texto + ")"); return; }
+      params.append(p.campo, marcada.value);
+    }
+    const ok = await enviar(params);
+    if (ok) form.reset();
+  });
+
+  btnReporte.addEventListener("click", () => {
+    const params = new URLSearchParams();
+    params.append("accion", "reporte");
+    enviar(params);
+  });
+</script>
+</body>
+</html>
