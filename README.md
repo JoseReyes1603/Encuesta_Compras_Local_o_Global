@@ -1,1 +1,5 @@
-# Encuesta_Compras_Local_o_Global
+# Encuesta Compras Local o Global
+## Codigo
+## Imagenes
+## Video
+## Resultados
