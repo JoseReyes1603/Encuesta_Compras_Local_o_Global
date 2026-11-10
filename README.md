@@ -1,5 +1,19 @@
-# Encuesta Compras Local o Global
-## Pagina de la encuesta  
+# 🌱 Práctica 4.2-P8: Encuesta "¿Compras local o global?"
+
+| Campo | Detalle |
+|---|---|
+| **Asignatura** | Desarrollo Sustentable (ACD-0908) |
+| **Carrera** | Ingeniería en Sistemas Computacionales |
+| **Unidad** | 4. Escenario económico |
+| **Tema** | 4.2 Economía global vs economía local y PIB |
+| **Alumno(s)** | José Reyes Valdés Zamudio [agregar integrantes] |
+| **Equipo** | [#] |
+| **Profesor** | [Nombre del profesor] |
+| **Fecha** | [dd/mm/2026] |
+
+🔗 **Página de la encuesta:** [https://TU-USUARIO.github.io/TU-REPOSITORIO/](https://TU-USUARIO.github.io/TU-REPOSITORIO/)
+
+---
 ## Codigo
 ## Imagenes
 ## Video
