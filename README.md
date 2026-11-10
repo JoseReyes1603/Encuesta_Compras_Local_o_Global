@@ -12,7 +12,7 @@
 | **Fecha** | [dd/mm/2026] |
 
 🔗 **Página de la encuesta:** 
-[Ir a la Página](https://josereyes1603.github.io/Encuesta_Compras_Local_o_Global/)
+[Ir a la Página](https://josereyes1603.github.io/Encuesta_Compras_Local_o_Global/Codigo/)
 
 ---
 ## Codigo
