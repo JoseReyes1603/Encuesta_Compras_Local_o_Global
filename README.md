@@ -11,7 +11,8 @@
 | **Profesor** | [Nombre del profesor] |
 | **Fecha** | [dd/mm/2026] |
 
-🔗 **Página de la encuesta:** [https://TU-USUARIO.github.io/TU-REPOSITORIO/](https://TU-USUARIO.github.io/TU-REPOSITORIO/)
+🔗 **Página de la encuesta:** 
+[Ir a la Página](https://josereyes1603.github.io/Encuesta_Compras_Local_o_Global/)
 
 ---
 ## Codigo
