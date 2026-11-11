@@ -25,6 +25,7 @@
 [Ver video](https://youtube.com/shorts/U9ZpvDqwPig?feature=share)
 
 ## Resultados
+[Ver PDF](https://github.com/JoseReyes1603/Encuesta_Compras_Local_o_Global/blob/main/Resultados/Reporte_P4.2_Encuesta_local_o_global.pdf)
 
 
 
