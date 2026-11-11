@@ -16,6 +16,7 @@
 
 ---
 ## Codigo
+[Ver Codigo](Codigo/blueprint_encuesta.json)
 ## Imagenes
 ## Video
 ## Resultados
